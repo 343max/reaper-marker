@@ -1,0 +1,24 @@
+Requirements:
+
+- Reaper http://www.reaper.fm/
+  Great Audio Recording Software, available for all plattforms
+
+- some OSC to MIDI converter
+  on the Mac I user OSCulator http://www.osculator.net/
+
+- Python and some modules:
+	- PyOSC:
+	  pip install PyOSC
+
+	- SimpleOSC:
+	  http://www.ixi-audio.net/content/body_backyard_python.html
+
+	- gntp (Growl Notifications)
+	  pip install gntp
+
+Installation:
+
+  start OSCulator, make sure it listens on Port 8000 (or change all my scripts)
+  fire up "markerPing.py": $ python markerPing.py
+  you should see an new message in OSCulator: /bot/newmarker
+  set the event type of this new message to "MIDI CC" and set the channel & value to something of your choice
