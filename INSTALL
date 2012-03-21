@@ -16,6 +16,9 @@ Requirements:
 	- gntp (Growl Notifications)
 	  pip install gntp
 
+	- irclib 
+		http://python-irclib.sourceforge.net/
+
 Installation:
 
   start OSCulator, make sure it listens on Port 8000 (or change all my scripts)
