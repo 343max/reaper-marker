@@ -5,8 +5,14 @@ import re
 import pprint
 import gntp.notifier
 import os.path
+import ConfigParser
 
-initOSCClient(port=8000)
+config = ConfigParser.ConfigParser()
+config.read("config.cfg")
+
+oscPort = config.getint("osc", "port")
+oscPath = config.get("osc", "path")
+initOSCClient(port=oscPort)
 
 # sendOSCMsg('/bot/newchapter')
 
@@ -22,11 +28,11 @@ except socket.error:
 	print "Growl is not running..."
 
 # Connection information
-network = 'irc.freenode.net'
-port = 6667
-channel = '#reapermarkertest'
-nick = 'chapterbot'
-name = 'Chapter Bot'
+network = config.get("irc", "network")
+port    = config.getint("irc", "port") 
+channel = config.get("irc", "channel") 
+nick    = config.get("irc", "nick") 
+name    = config.get("irc", "name")
 
 # Create an IRC object
 irc = irclib.IRC()
@@ -46,7 +52,7 @@ def newMarker(markerName):
 	markerFile.write(markerName)
 	markerFile.close()
 
-	sendOSCMsg('/bot/newchapter')
+	sendOSCMsg(oscPath)
 
 	# grwol notification
 	if growl in globals():
@@ -57,7 +63,8 @@ def newMarker(markerName):
 		)
 
 	# nicecast title
-	nicecastFile = open(os.path.expanduser('~/Library/Application Support/Nicecast/NowPlaying.txt'), 'w')	
+	#nicecastFile = open(os.path.expanduser('~/Library/Application Support/Nicecast/NowPlaying.txt'), 'w')	
+	nicecastFile = open(os.path.expanduser('NowPlaying.txt'), 'w')	
 	text = "title: {0}".format(markerName)
 	nicecastFile.write(text)
 	nicecastFile.close()
