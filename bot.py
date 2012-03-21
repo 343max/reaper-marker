@@ -63,8 +63,8 @@ def newMarker(markerName):
 		)
 
 	# nicecast title
-	#nicecastFile = open(os.path.expanduser('~/Library/Application Support/Nicecast/NowPlaying.txt'), 'w')	
-	nicecastFile = open(os.path.expanduser('NowPlaying.txt'), 'w')	
+	nicecastFile = open(os.path.expanduser('~/Library/Application Support/Nicecast/NowPlaying.txt'), 'w')	
+	#nicecastFile = open(os.path.expanduser('NowPlaying.txt'), 'w')	
 	text = "title: {0}".format(markerName)
 	nicecastFile.write(text)
 	nicecastFile.close()
