@@ -1,6 +1,12 @@
 from simpleOSC import *
+import ConfigParser, os
 
+config = ConfigParser.ConfigParser()
+config.read("config.cfg")
 
-initOSCClient(port=8000)
+oscPort = config.getint("osc", "port")
+oscPath = config.get("osc", "path")
 
-sendOSCMsg('/bot/newchapter')
+initOSCClient(port=oscPort)
+
+sendOSCMsg(oscPath)
