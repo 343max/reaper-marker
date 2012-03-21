@@ -11,12 +11,15 @@ initOSCClient(port=8000)
 # sendOSCMsg('/bot/newchapter')
 
 #Growl
-growl = gntp.notifier.GrowlNotifier(
-    applicationName = "Crowd Marker",
-    notifications = ["New Chapter Mark"],
-    defaultNotifications = ["New Chapter Mark"]
-)
-growl.register()
+try: 
+	growl = gntp.notifier.GrowlNotifier(
+	    applicationName = "Crowd Marker",
+	    notifications = ["New Chapter Mark"],
+	    defaultNotifications = ["New Chapter Mark"]
+	)
+	growl.register()
+except socket.error: 
+	print "Growl is not running..."
 
 # Connection information
 network = 'irc.freenode.net'
@@ -46,14 +49,15 @@ def newMarker(markerName):
 	sendOSCMsg('/bot/newchapter')
 
 	# grwol notification
-	growl.notify(
-		noteType = "New Chapter Mark",
- 		title = "New Chapter",
-    	description = markerName
-	)
+	if growl in globals():
+		growl.notify(
+			noteType = "New Chapter Mark",
+	 		title = "New Chapter",
+	    	description = markerName
+		)
 
 	# nicecast title
-	nicecastFile = open(os.path.expanduser('~/Library/Application Support/Nicecast/NowPlaying.txt'), 'w')
+	nicecastFile = open(os.path.expanduser('~/Library/Application Support/Nicecast/NowPlaying.txt'), 'w')	
 	text = "title: {0}".format(markerName)
 	nicecastFile.write(text)
 	nicecastFile.close()
